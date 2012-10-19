@@ -1,28 +1,28 @@
 .. _user-guide.modules:
 
 #######
-Modules
+Módulos
 #######
 
-Zend Framework 2 uses a module system and you organise your main
-application-specific code within each module. The Application module provided by
-the skeleton is used to provide bootstrapping, error and routing configuration to
-the whole application. It is usually used to provide application level
-controllers for, say, the home page of an application, but we are not going to
-use the default one provided in this tutorial as we want our album list to be
-the home page, which will live in our own module.  
+Zend Framework 2 utiliza un sistema de módulos para organizar el código específico
+para cada etapa en su correspondiente módulo. El módulo Application que provee la
+aplicación esqueleto se utiliza para proveer la configuración de bootstrapping, error y
+enrutamiento para toda la aplicación. Se utiliza habitualmente para proveer controladores
+de nivel de aplicación para, se podría decir, la página de inicio de una aplicación, pero 
+no vamos a utilizar la que viene por defecto en este tutorial, pues queremos que la página
+de inicio sea la lista de albums, la cual va a vivir en nuestro módulo.
 
-We are going to put all our code into the Album module which will contain our
-controllers, models, forms and views, along with configuration. We’ll also tweak
-the Application module as required.
+Vamos a poner todo nuestro código en el módulo Album, el cual va a contener nuestros
+controladores, modelos, formularios y vistas. Además vamos a necesitar algunos archivos de
+configuración.
 
-Let’s start with the directories required.
+Comencemos con las carpetas requeridas.
 
-Setting up the Album module
----------------------------
+Configurando el módulo Album
+----------------------------
 
-Start by creating a directory called ``Album`` under with the following
-subdirectories to hold the module’s files:
+Comience creando una carpeta llamada ``Album`` con los siguientes
+subdirectorios para guardar los archivos del módulo:
 
 .. code-block:: text
 
@@ -39,11 +39,14 @@ subdirectories to hold the module’s files:
                     /album
                         /album
 
-As you can see the ``Album`` module has separate directories for the different
-types of files we will have. The PHP files that contain classes within the
-``Album`` namespace live in the ``src/Album`` directory so that we can have
-multiple namespaces within our module should we require it. The view directory
-also has a sub-folder called ``album`` for our module’s view scripts.
+Como puede ver, el módulo ``Album`` posee directorios separados para los diferentes
+tipos de archivos que va a tener. Los archivos PHP que contienen clases con el
+namespace ``Album`` viven en el directorio ``src/Album``, por lo que podemos tener
+múltiples namespaces dentro de nuestro módulo cuando sea necesario. El directorio de vistas
+tiene también un subdirectorio llamado ``album`` para las vistas de nuestro módulo.
+
+----> Para poder cargar y configurar un módulo, Zend Framework 2 tiene un
+``ModuleManager``.
 
 In order to load and configure a module, Zend Framework 2 has a
 ``ModuleManager``. This will look for ``Module.php`` in the root of the module
