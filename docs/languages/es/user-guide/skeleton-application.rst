@@ -7,11 +7,11 @@ Comenzando: la aplicación esqueleto
 Para construir nuestra aplicación, vamos a comenzar con 
 `ZendSkeletonApplication <https://github.com/zendframework/ZendSkeletonApplication>`_
 disponible en `github <https://github.com/>`_.
-Vaya a https://github.com/zendframework/ZendSkeletonApplication y haz clic en el botón “Zip”.
+Vaya a https://github.com/zendframework/ZendSkeletonApplication y haga clic en el botón “Zip”.
 Esto descargará un archivo con un nombre similar a
 ``zendframework-ZendSkeletonApplication-zfrelease-2.0.0beta5-2-gc2c7315.zip``.
 
-Descomprima este archivo en el directorio donde mantiene todos tus vhosts y renombre el
+Descomprima este archivo en el directorio donde mantiene todos sus vhosts y renombre el
 directorio resultante a ``zf2-tutorial``.
 
 ZendSkeletonApplication está montado para utilizar Composer (http://getcomposer.org) para
@@ -65,7 +65,7 @@ Ahora necesita crear un virtual host Apache para la aplicación y editar su
 archivo hosts para que http://zf2-tutorial.localhost acceda a ``index.php`` desde el
 directorio ``zf2-tutorial/public``.
 
-Para configurar el virtual host normalmente se realiza a través del archivo ``httpd.conf`` ó
+Para configurar el virtual host normalmente se realiza a través del archivo ``httpd.conf`` o
 ``extra/httpd-vhosts.conf``. (Si está utilizando ``httpd-vhosts.conf``, asegúrese
 de que este archivo esté incluido en el archivo principal ``httpd.conf``.)
 
@@ -86,7 +86,7 @@ defina un virtual host según las siguientes líneas:
         </Directory>
     </VirtualHost>
 
-Asegúrese de que actualiza su fichero ``/etc/hosts`` ó 
+Asegúrese de que actualiza su fichero ``/etc/hosts`` o 
 ``c:\windows\system32\drivers\etc\hosts`` para que ``zf2-tutorial.localhost``
 apunte a ``127.0.0.1``. De esta manera, el sitio web puede ser accedido usando
 http://zf2-tutorial.localhost. 
