@@ -1,53 +1,53 @@
 .. _user-guide.routing-and-controllers:
 
-#######################
-Routing and controllers
-#######################
+############################
+Enrutamiento y controladores
+############################
 
-We will build a very simple inventory system to display our album
-collection. The home page will list our collection and allow us to add, edit and
-delete albums. Hence the following pages are required:
+Vamos a construir un sistema de inventario muy simple para mostrar nuestra
+colección de albums. La página de inicio va a listar nuestra colección y nos va a permitir añadir, editar y
+eliminar albums. De ahí que las páginas requeridas sean las siguientes:
 
-+---------------+------------------------------------------------------------+
-| Page          | Description                                                |
-+===============+============================================================+
-| Home          | This will display the list of albums and provide links to  |
-|               | edit and delete them. Also, a link to enable adding new    |
-|               | albums will be provided.                                   |
-+---------------+------------------------------------------------------------+
-| Add new album | This page will provide a form for adding a new album.      |
-+---------------+------------------------------------------------------------+
-| Edit album    | This page will provide a form for editing an album.        |
-+---------------+------------------------------------------------------------+
-| Delete album  | This page will confirm that we want to delete an album and |
-|               | then delete it.                                            |
-+---------------+------------------------------------------------------------+
++-----------------+--------------------------------------------------------------+
+| Página          | Descripción                                                  |
++=================+==============================================================+
+| Inicio          | Mostrará el listado de discos y proveerá enlaces para        |
+|                 | editarlos y modificarlos. Además, proveerá un enlace para    |
+|                 | añadir nuevos albums.                                        |
++-----------------+--------------------------------------------------------------+
+| Añadir album    | Esta página proveerá un formulario para añadir un album.     |
++-----------------+--------------------------------------------------------------+
+| Editar album    | Esta página proveerá un formulario para editar un album.     |
++-----------------+--------------------------------------------------------------+
+| Eliminar album  | Esta página confirmará que queremos eliminar un album y      |
+|                 | después se eliminará.                                        |
++-----------------+--------------------------------------------------------------+
 
-Before we set up our files, it’s important to understand how the framework
-expects the pages to be organised. Each page of the application is known as an
-*action* and actions are grouped into *controllers* within *modules*. Hence, you
-would generally group related actions into a controller; for instance, a news
-controller might have actions of ``current``, ``archived`` and ``view``.
+Antes de comenzar a montar nuestros archivos, es importante entender como espera el
+framework que las páginas estén organizadas. Cada página de la aplicación es conocida como una
+*acción* y las acciones están agrupadas dentro de *controladores* contenidos en *módulos*.
+De esta forma, agrupará generalmente acciones relacionadas dentro de un mismo controlador;
+por ejemplo, un controlador de noticias debería tener acciones ``current``, ``archived`` y ``view``.
 
-As we have four pages that all apply to albums, we will group them in a single
-controller ``AlbumController`` within our ``Album`` module as four actions. The
-four actions will be:
+Como tenemos cuatro páginas que están todas relacionadas con albums, vamos a agruparlas en un controlador
+único ``AlbumController`` dentro de nuestro módulo ``Album`` como cuatro acciones.
+Las cuatro acciones serán:
 
-+---------------+---------------------+------------+
-| Page          | Controller          | Action     |
-+===============+=====================+============+
-| Home          | ``AlbumController`` | ``index``  |
-+---------------+---------------------+------------+
-| Add new album | ``AlbumController`` | ``add``    |
-+---------------+---------------------+------------+
-| Edit album    | ``AlbumController`` | ``edit``   |
-+---------------+---------------------+------------+
-| Delete album  | ``AlbumController`` | ``delete`` |
-+---------------+---------------------+------------+
++-----------------+---------------------+------------+
+| Página          | Controlador         | Acción     |
++=================+=====================+============+
+| Inicio          | ``AlbumController`` | ``index``  |
++-----------------+---------------------+------------+
+| Añadir album    | ``AlbumController`` | ``add``    |
++-----------------+---------------------+------------+
+| Editar album    | ``AlbumController`` | ``edit``   |
++-----------------+---------------------+------------+
+| Eliminar album  | ``AlbumController`` | ``delete`` |
++-----------------+---------------------+------------+
 
-The mapping of a URL to a particular action is done using routes that are defined
-in the module’s ``module.config.php`` file. We will add a route for our album
-actions. This is the updated config file with the new code commented.
+El mapeo de una URL a una acción particular se realiza utilizando rutas definidas
+en el archivo ``module.config.php`` del módulo. Añadiremos una ruta para nuestras
+acciones de album. Este es el archivo de configuración actualizado, con el nuevo código comentado.
 
 .. code-block:: php
 
@@ -58,8 +58,8 @@ actions. This is the updated config file with the new code commented.
                 'Album\Controller\Album' => 'Album\Controller\AlbumController',
             ),
         ),
-
-        // The following section is new and should be added to your file
+        
+        // La siguiente sección es nueva y debería ser añadida a su fichero
         'router' => array(
             'routes' => array(
                 'album' => array(
@@ -85,6 +85,8 @@ actions. This is the updated config file with the new code commented.
             ),
         ),
     );
+
+// CONTINUAR AQUÍ
 
 The name of the route is ‘album’ and has a type of ‘segment’. The segment route
 allows us to specify placeholders in the URL pattern (route) that will be mapped
