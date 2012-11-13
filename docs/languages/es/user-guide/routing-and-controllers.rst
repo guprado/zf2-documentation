@@ -86,55 +86,52 @@ acciones de album. Este es el archivo de configuración actualizado, con el nuev
         ),
     );
 
-// CONTINUAR AQUÍ
+El nombre de la ruta es ´album´ y tiene un tipo de ´segmento´. La ruta del segmento
+nos permite especificar lugares de almacenamiento en el patrón URL que serán mapeados
+a los parámetros nombrados en la ruta. En este caso, la ruta es
+**``/album[/:action][/:id]``** que coincidirá con cualquier ruta que comience con
+``/album``. El siguiente segmento será un id opcional. Los corchetes indican
+que un segmento es opcional. La sección de restricciones nos permite asegurar que los
+caracteres dentro de un segmento son los esperados, por lo que limitamos las acciones a
+comenzar con una letra y posteriormente solo caracteres alfanuméricos,
+guiones bajos o guiones simples. También limitamos el id a un número.
 
-The name of the route is ‘album’ and has a type of ‘segment’. The segment route
-allows us to specify placeholders in the URL pattern (route) that will be mapped
-to named parameters in the matched route. In this case, the route is
-**``/album[/:action][/:id]``** which will match any URL that starts with
-``/album``. The next segment will be an optional action name, and then finally
-the next segment will be mapped to an optional id. The square brackets indicate
-that a segment is optional. The constraints section allows us to ensure that the
-characters within a segment are as expected, so we have limited actions to
-starting with a letter and then subsequent characters only being alphanumeric,
-underscore or hyphen. We also limit the id to a number.
-
-This route allows us to have the following URLs:
+Esta ruta nos permite tener las siguientes URLs:
 
 +---------------------+------------------------------+------------+
-| URL                 | Page                         | Action     |
+| URL                 | Página                       | Acción     |
 +=====================+==============================+============+
-| ``/album``          | Home (list of albums)        | ``index``  |
+| ``/album``          | Inicio (Lista de albums)     | ``index``  |
 +---------------------+------------------------------+------------+
-| ``/album/add``      | Add new album                | ``add``    |
+| ``/album/add``      | Añadir nuevo album           | ``add``    |
 +---------------------+------------------------------+------------+
-| ``/album/edit/2``   | Edit album with an id of 2   | ``edit``   |
+| ``/album/edit/2``   | Editar album con id 2        | ``edit``   |
 +---------------------+------------------------------+------------+
-| ``/album/delete/4`` | Delete album with an id of 4 | ``delete`` |
+| ``/album/delete/4`` | Eliminar album con id 4      | ``delete`` |
 +---------------------+------------------------------+------------+
 
-Create the controller
-=====================
+Crear el controlador
+====================
 
-We are now ready to set up our controller. In Zend Framework 2, the controller
-is a class that is generally called ``{Controller name}Controller``. Note that
-``{Controller name}`` must start with a capital letter.  This class lives in a file
-called ``{Controller name}Controller.php`` within the ``Controller`` directory for the
-module. In our case that is ``module/Album/src/Album/Controller``. Each action is
-a public method within the controller class that is named ``{action name}Action``.
-In this case ``{action name}`` should start with a lower case letter.
+Ahora estamos listos para comenzar a montar nuestro controlador. En Zend Framework 2, el controlador
+es una clase generalmente llamada ``{Controller name}Controller``. Note que
+``{Controller name}`` debe empezar con una letra mayúscula. Esta clase reside en un archivo
+llamado ``{Controller name}Controller.php`` dentro del directorio ``Controller`` del
+módulo. En nuestro caso es ``module/Album/src/Album/Controller``. Cada acción es
+un método público dentro de la clase controlador llamado ``{action name}Action``.
+En este caso ``{action name}`` debe comenzar con una letra minúscula.
 
 .. note::
 
-    This is by convention. Zend Framework 2 doesn’t provide many
-    restrictions on controllers other than that they must implement the
-    ``Zend\Stdlib\Dispatchable`` interface. The framework provides two abstract
-    classes that do this for us: ``Zend\Mvc\Controller\AbstractActionController``
-    and ``Zend\Mvc\Controller\AbstractRestfulController``. We’ll be using the
-    standard ``AbstractActionController``, but if you’re intending to write a
-    RESTful web service, ``AbstractRestfulController`` may be useful.
+    Esto es por convención. Zend Framework 2 no provee demasiadas
+    restricciones en los controladores además del deber de implementar la
+    interfaz ``Zend\Stdlib\Dispatchable``. El framework provee dos clases
+    abstractas que hacen esto por nosotros: ``Zend\Mvc\Controller\AbstractActionController``
+    y ``Zend\Mvc\Controller\AbstractRestfulController``. Nosotros utilizaremos el
+    ``AbstractActionController`` estándar, pero si lo que pretende es escribir un
+    servicio web con REST, ``AbstractRestfulController`` podría serle útil.
 
-Let’s go ahead and create our controller class:
+Sigamos adelante y creemos nuestra clase controlador:
 
 .. code-block:: php
 
@@ -165,14 +162,14 @@ Let’s go ahead and create our controller class:
 
 .. note::
 
-    We have already informed the module about our controller in the
-    ‘controller’ section of ``config/module.config.php``.
+    Ya hemos informado al módulo acerca de nuestro controlador en la
+    sección ‘controller’ de ``config/module.config.php``.
 
-We have now set up the four actions that we want to use. They won’t work yet
-until we set up the views. The URLs for each action are:
+Ahora tenemos montadas las cuatro acciones que queremos utilizar. No funcionarán aún
+hasta que montemos las vistas. Las URLs para cada acción son:
 
 +--------------------------------------------+----------------------------------------------------+
-| URL                                        | Method called                                      |
+| URL                                        | Método llamado                                     |
 +============================================+====================================================+
 | http://zf2-tutorial.localhost/album        | ``Album\Controller\AlbumController::indexAction``  |
 +--------------------------------------------+----------------------------------------------------+
@@ -183,23 +180,23 @@ until we set up the views. The URLs for each action are:
 | http://zf2-tutorial.localhost/album/delete | ``Album\Controller\AlbumController::deleteAction`` |
 +--------------------------------------------+----------------------------------------------------+
 
-We now have a working router and the actions are set up for each page of our
-application.
+Ahora tenemos un router funcionando y las acciones están montadas para cada una de las páginas de nuestra
+aplicación.
 
-It’s time to build the view and the model layer.
+Es el momento de construir las vistas y el modelo.
 
-Initialise the view scripts
----------------------------
+Inicializar los scripts de vista
+--------------------------------
 
-To integrate the view into our application all we need to do is create some view
-script files. These files will be executed by the ``DefaultViewStrategy`` and will be
-passed any variables or view models that are returned from the controller action
-method. These view scripts are stored in our module’s views directory within a
-directory named after the controller. Create these four empty files now:
+Para integrar la vista en nuestra aplicación todo lo que necesitamos hacer es crear algunos
+ficheros script de vista. Estos ficheros serán ejecutados por ``DefaultViewStrategy`` y serán
+pasados cualquier variable o modelo de vista que sean devueltos desde el método acción del
+controlador. Estos scripts de vista están almacenados en nuestro directorio de vistas del módulo dentro de un
+directorio llamado como el controlador. Cree ahora estos cuatro archivos vacíos:
 
 * ``module/Album/view/album/album/index.phtml``
 * ``module/Album/view/album/album/add.phtml``
 * ``module/Album/view/album/album/edit.phtml``
 * ``module/Album/view/album/album/delete.phtml``
 
-We can now start filling everything in, starting with our database and models.
+Ahora podemos comenzar a completar todo, comenzando por nuestra base de datos y los modelos.
