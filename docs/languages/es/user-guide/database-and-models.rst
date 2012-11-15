@@ -157,39 +157,39 @@ Next, we extend ``Zend\Db\TableGateway\AbstractTableGateway`` and create our own
         }
     }
 
-There’s a lot going on here. Firstly, we set the protected property ``$table``
-to the name of the database table, ‘album’ in this case. We then write a
-constructor that takes a database adapter as its only parameter and assigns it
-to the adapter property of our class. We then need to tell the table gateway’s
-result set that whenever it creates a new row object, it should use an ``Album``
-object to do so. The ``TableGateway`` classes use the prototype pattern for
-creation of result sets and entities. This means that instead of instantiating
-when required, the system clones a previously instantiated object. See 
+Aquí ocurren muchas cosas. En primer lugar, asignamos a la propiedad protegida ``$table``
+el nombre de la tabla en la base de datos, ‘album’ en este caso. Entonces escribimos un
+constructor que tome un adaptador para la base de datos como único parámetro y lo asigne
+a la propiedad adapter de nuestra clase. Entonces, necesitamos decirle al result set del
+table gateway que cada vez que cree un nuevo objeto fila (row), debería utilizar un objeto
+``Album`` para hacerlo. Las clases ``TableGateway`` utilizan el patrón prototipo para la
+creación de result sets y entidades. Esto significa que en lugar de instanciar
+cuando es necesario, el sistema clona un objeto previamente instanciado. Mire
 `PHP Constructor Best Practices and the Prototype Pattern 
 <http://ralphschindler.com/2012/03/09/php-constructor-best-practices-and-the-prototype-pattern>`_
-for more details.
+para mas detalles.
 
-We then create some helper methods that our application will use to interface
-with the database table.  ``fetchAll()`` retrieves all albums rows from the
-database as a ``ResultSet``, ``getAlbum()`` retrieves a single row as an
-``Album`` object, ``saveAlbum()`` either creates a new row in the database or
-updates a row that already exists and ``deleteAlbum()`` removes the row
-completely. The code for each of these methods is, hopefully, self-explanatory.
+Entonces creamos algunos métodos de ayuda que nuestra aplicación utilizará como interfaz
+con la tabla de la base de datos. ``fetchAll()`` recupera todas las filas de albums de la
+base de datos como un ``ResultSet``, ``getAlbum()`` recupera una única fila como un
+objeto ``Album``, ``saveAlbum()`` crea una nueva fila en la base de datos o
+actualiza una fila que ya existe y ``deleteAlbum()`` elimina la fila completamente.
+El código para cada uno de estos métodos, afortunadamente, se explica por sí solo.
 
-Using ServiceManager to configure the database credentials and inject into the controller
------------------------------------------------------------------------------------------
+Utilizando ServiceManager para configurar las credenciales de la base de datos e inyección en el controlador
+------------------------------------------------------------------------------------------------------------
 
-In order to always use the same instance of our ``AlbumTable``, we will use the
-``ServiceManager`` to define how to create one. This is most easily done in the
-Module class where we create a method called ``getServiceConfig()`` which is
-automatically called by the ``ModuleManager`` and applied to the ``ServiceManager``.
-We’ll then be able to retrieve it in our controller when we need it.
+Para utilizar siempre la misma instancia de nuestro ``AlbumTable``, utilizaremos el
+``ServiceManager`` para definir como crear una. Esto se hace de manera simple en la
+clase Module donde creamos un método llamado ``getServiceConfig()`` que es
+automáticamente llamado por el ``ModuleManager`` y aplicado en el ``ServiceManager``.
+Entonces podremos recuperarlo en nuestro controlador cuando lo necesitemos.
 
-To configure the ``ServiceManager``, we can either supply the name of the class
-to be instantiated or a factory (closure or callback) that instantiates the
-object when the ``ServiceManager`` needs it. We start by implementing
-``getServiceConfig()`` to provide a factory that creates an ``AlbumTable``. Add
-this method to the bottom of the ``Module`` class.
+Para configurar el ``ServiceManager``, podemos suministrar el nombre de la clase
+para que sea instanciada o una factoría que instancie el
+objeto cuando el ``ServiceManager`` lo necesite. Empezamos por implementar 
+``getServiceConfig()`` para proveer una factoría que cree un ``AlbumTable``. Añada
+este método al final de la clase ``Module``.
 
 .. code-block:: php
 
@@ -229,6 +229,14 @@ the files in ``config/autoload`` (``*.global.php`` and then ``*.local.php``
 files). We’ll add our database configuration information to ``global.php`` which
 you should commit to your version control system.You can use ``local.php``
 (outside of the VCS) to store the credentials for your database if you want to.
+
+Este método devuelve un array de ``factories`` que son todas fusionadas entre sí por
+el ``ModuleManager`` antes de pasar al ``ServiceManager``. También necesitamos
+configurar el ``ServiceManager`` para que sepa como tomar un
+``Zend\Db\Adapter\Adapter``. Esto se hace utilizando una factoría llamada
+``Zend\Db\Adapter\AdapterServiceFactory`` que podemos configurar dentro del
+sistema de configuración. El ``ModuleManager`` de Zend Framework 2 fusiona toda la
+configuración  //  SEGUIR AQUÍ
 
 .. code-block:: php
 
