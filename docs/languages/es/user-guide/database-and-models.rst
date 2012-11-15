@@ -230,13 +230,15 @@ files). We’ll add our database configuration information to ``global.php`` whi
 you should commit to your version control system.You can use ``local.php``
 (outside of the VCS) to store the credentials for your database if you want to.
 
-Este método devuelve un array de ``factories`` que son todas fusionadas entre sí por
+Este método devuelve un array de ``factories`` que son todas combinadas por
 el ``ModuleManager`` antes de pasar al ``ServiceManager``. También necesitamos
 configurar el ``ServiceManager`` para que sepa como tomar un
 ``Zend\Db\Adapter\Adapter``. Esto se hace utilizando una factoría llamada
 ``Zend\Db\Adapter\AdapterServiceFactory`` que podemos configurar dentro del
-sistema de configuración. El ``ModuleManager`` de Zend Framework 2 fusiona toda la
-configuración  //  SEGUIR AQUÍ
+sistema de configuración. El ``ModuleManager`` de Zend Framework 2 combina toda la
+configuración del fichero ``module.config.php`` de cada módulo y entonces une
+los archivos en ``config/autoload`` (archivos ``*.global.php`` y entonces ``*.local.php``).
+Añadiremos a la base de datos  // SEGUIR AQUI
 
 .. code-block:: php
 
