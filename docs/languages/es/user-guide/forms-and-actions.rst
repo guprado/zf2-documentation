@@ -1,25 +1,25 @@
 .. _user-guide-forms-and-actions:
 
-#################
-Forms and actions
-#################
+######################
+Formularios y acciones
+######################
 
-Adding new albums
------------------
+Añadiendo nuevos albums
+-----------------------
 
-We can now code up the functionality to add new albums. There are two bits to
-this part:
+Ahora podemos programar la funcionalidad para añadir nuevos albums. Hay dos cosas que realizar
+en esta parte:
 
-* Display a form for user to provide details
-* Process the form submission and store to database
+* Mostrar un formulario para que el usuario introduzca información
+* Procesar la información del formulario y guardarla en la base de datos
   
-We use ``Zend\Form`` to do this. The ``Zend\Form`` component manages the form
-and for validation, we add a ``Zend\InputFilter`` to our ``Album`` entity. We
-start by creating a new class ``Album\Form\AlbumForm`` that extends from
-``Zend\Form\Form`` to define our form. The class is stored in the
-``AlbumForm.php`` file within the ``module/Album/src/Album/Form`` directory.
+Para hacer esto utilizamos ``Zend\Form``. El componente ``Zend\Form`` maneja el formulario,
+y para validar la información añadimos un ``Zend\InputFilter`` a nuestra entidad ``Album``.
+Comenzamos creando una nueva clase ``Album\Form\AlbumForm`` que extienda de
+``Zend\Form\Form`` para definir nuestro formulario. La clase está almacenada en el
+archivo ``AlbumForm.php`` dentro del directorio ``module/Album/src/Album/Form``.
 
-Create this file file now:
+Cree este archivo ahora:
 
 .. code-block:: php
 
