@@ -70,15 +70,15 @@ Cree este archivo ahora:
         }
     }
 
-Within the constructor of ``AlbumForm``, we set the name when we call the parent’s
-constructor and then set the method and then create four form elements for the
-id, artist, title, and submit button. For each item we set various attributes
-and options, including the label to be displayed.
+Dentro del constructor de ``AlbumForm``, establecemos el nombre para llamar al constructor
+de la clase padre, establecemos el método y después creamos cuatro elementos de formulario para 
+id, artist, title y el botón submit. Para cada elemento establecemos varios atributos y opciones,
+incluida la etiqueta a mostrar.
 
-We also need to set up validation for this form. In Zend Framework 2 is this
-done using an input filter which can either be standalone or within any class
-that implements ``InputFilterAwareInterface``, such as a model entity. We are
-going to add the input filter to our ``Album`` entity:
+También necesitamos establecer validación para este formulario. En Zend Framework 2 esto se hace
+utilizando un filtro de entrada que puede tanto ser autónomo como estar dentro de cualquier clase
+que implemente ``InputFilterAwareInterface``, como una entidad del modelo. Vamos a
+añadir el filtro de entrada a nuestra entidad ``Album``:
 
 .. code-block:: php
 
@@ -167,6 +167,8 @@ going to add the input filter to our ``Album`` entity:
             return $this->inputFilter;
         }
     }
+
+// SEGUIR AQUÍ
 
 The ``InputFilterAwareInterface`` defines two methods: ``setInputFilter()`` and
 ``getInputFilter()``. We only need to implement ``getInputFilter()`` so we
