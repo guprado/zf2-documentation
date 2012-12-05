@@ -170,20 +170,20 @@ añadir el filtro de entrada a nuestra entidad ``Album``:
 
 // SEGUIR AQUÍ
 
-The ``InputFilterAwareInterface`` defines two methods: ``setInputFilter()`` and
-``getInputFilter()``. We only need to implement ``getInputFilter()`` so we
-simply throw an exception  in ``setInputFilter()``.
+``InputFilterAwareInterface`` define dos métodos: ``setInputFilter()`` y 
+``getInputFilter()``. Sólo necesitamos implementar ``getInputFilter()`` y
+simplemente lanzamos una excepción en ``setInputFilter()``.
 
-Within ``getInputFilter()``, we instantiate an ``InputFilter`` and then add the
-inputs that we require. We add one input for each property that we wish to
-filter or validate. For the ``id`` field we add an ``Int`` filter as we only
-need integers. For the text elements, we add two filters, ``StripTags`` and
-``StringTrim`` to remove unwanted HTML and unnecessary white space. We also set
-them to be *required* and add a ``StringLength`` validator to ensure that the
-user doesn’t enter more characters than we can store into the database.
+Dentro de ``getInputFilter()`` instanciamos un ``InputFilter`` y añadimos los
+input que necesitemos. Añadimos un input para cada propiedad que queramos
+filtrar o validar. Para el campo ``id`` añadimos un filtro ``Int`` dado que sólo
+necesitamos enteros. Para los elementos de texto añadimos dos filtros, ``StripTags`` y
+``StringTrim`` para eliminar HTML no deseado y espacio en blanco innecesario. También establecemos
+que sean *required* y añadimos un validador ``StringLength`` para asegurarnos de que
+el usuario no introduce más caracteres de los que podemos almacenar en la base de datos.
 
-We now need to get the form to display and then process it on submission. This
-is done within the ``AlbumController``’s ``addAction()``:
+Ahora necesitamos obtener el formulario para mostrar y después procesar la petición.
+Esto se realiza dentro de ``addAction()`` de ``AlbumController``:
 
 .. code-block:: php
 
@@ -220,17 +220,17 @@ is done within the ``AlbumController``’s ``addAction()``:
         }
     //...
 
-After adding the ``AlbumForm`` to the use list, we implement ``addAction()``.
-Let’s look at the ``addAction()`` code in a little more detail:
+Tras añadir el ``AlbumForm`` a la lista de uso, implementamos ``addAction()``.
+Vamos a analizar el código de ``addAction()`` con algo más de detalle:
 
 .. code-block:: php
 
     $form = new AlbumForm();
     $form->submit->setValue('Add');
 
-We instantiate `AlbumForm` and set the label on the submit button to “Add”. We
-do this here as we’ll want to re-use the form when editing an album and will use
-a different label.
+Instanciamos `AlbumForm` y damos valor “Add” a la etiqueta del botón submit. 
+Hacemos esto aquí dado que querremos reutilizar el formulario cuando editemos un album y utilizaremos
+una etiqueta diferente.
 
 .. code-block:: php
 
@@ -244,7 +244,10 @@ a different label.
 If the ``Request`` object’s ``isPost()`` method is true, then the form has been
 submitted and so we set the form’s input filter from an album instance. We then
 set the posted data to the form and check to see if it is valid using the
-``isValid()`` member function of the form.                
+``isValid()`` member function of the form.
+
+Si el método ``isPost()`` del objeto ``Request`` se evalua a true, entonces el formulario ha sido
+entregado y establecemos el filtro de entrada del formulario // SEGUIR
 
 .. code-block:: php
 
