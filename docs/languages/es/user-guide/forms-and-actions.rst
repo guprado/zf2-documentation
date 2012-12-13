@@ -380,8 +380,10 @@ album de la base de datos.
 El método ``bind()`` del formulario "conecta" el modelo con el formulario. Esto se utiliza en dos
 vías:
 
-# Cuando se muestra el formulario, los valores iniciales de cada elemento son extraídos del modelo.
-# Después de una validación exitosa en isValid(), los datos del formulario son devueltos al modelo.
+# Cuando se muestra el formulario, los valores iniciales de cada elemento son extraídos 
+  del modelo.
+# Después de una validación exitosa en isValid(), los datos del formulario son devueltos 
+  al modelo.
 
 Estas operaciones se hacen utilizando un objeto hydrator. Hay un número de
 hydrators, pero por defecto es ``Zend\Stdlib\Hydrator\ArraySerializable``
