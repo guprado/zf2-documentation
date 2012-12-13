@@ -168,8 +168,6 @@ añadir el filtro de entrada a nuestra entidad ``Album``:
         }
     }
 
-// SEGUIR AQUÍ
-
 ``InputFilterAwareInterface`` define dos métodos: ``setInputFilter()`` y 
 ``getInputFilter()``. Sólo necesitamos implementar ``getInputFilter()`` y
 simplemente lanzamos una excepción en ``setInputFilter()``.
@@ -241,40 +239,37 @@ una etiqueta diferente.
         $form->setData($request->getPost());
         if ($form->isValid()) {
 
-If the ``Request`` object’s ``isPost()`` method is true, then the form has been
-submitted and so we set the form’s input filter from an album instance. We then
-set the posted data to the form and check to see if it is valid using the
-``isValid()`` member function of the form.
-
 Si el método ``isPost()`` del objeto ``Request`` se evalua a true, entonces el formulario ha sido
-entregado y establecemos el filtro de entrada del formulario // SEGUIR
+entregado y establecemos el filtro de entrada del formulario desde una instancia de album. Entonces
+pasamos los datos enviados al formulario y comprobamos si es válido utilizando la función miembro
+``isValid()`` del formulario.
 
 .. code-block:: php
 
     $album->exchangeArray($form->getData());
     $this->getAlbumTable()->saveAlbum($album);
 
-If the form is valid, then we  grab the data from the form and store to the
-model using ``saveAlbum()``.
+Si el formulario es válido, obtenemos los datos del formulario y los almacenamos en el
+modelio utilizando ``saveAlbum()``.
 
 .. code-block:: php
 
     // Redirect to list of albums
     return $this->redirect()->toRoute('album');
 
-After we have saved the new album row, we redirect back to the list of albums
-using the ``Redirect`` controller plugin.
+Después de haber guardado la nueva fila de album, hacemos una redirección a la lista de albums
+utilizando el plugin ``Redirect`` del controlador.
 
 .. code-block:: php
 
     return array('form' => $form);
 
-Finally, we return the variables that we want assigned to the view. In this
-case, just the form object. Note that Zend Framework 2 also allows you to simply
-return an array containing the variables to be assigned to the view and it will
-create a ``ViewModel`` behind the scenes for you. This saves a little typing.
+Finalmente, devolvemos las variables que queremos asignar a la vista. En este
+caso, solamente el objeto formulario. Note que Zend Framework 2 también le permite simplemente
+devolver un array que contenga las variables que asignar a la vista y este
+creará un ``ViewModel`` para usted él solo. Esto ahorra teclear un poco más.
 
-We now need to render the form in the add.phtml view script:
+Ahora necesitamos representar el formulario en el script de vista add.phtml:
 
 .. code-block:: php
 
@@ -297,24 +292,24 @@ We now need to render the form in the add.phtml view script:
     echo $this->formSubmit($form->get('submit'));
     echo $this->form()->closeTag();
 
-Again, we display a title as before and then we render the form. Zend Framework
-provides some view helpers to make this a little easier. The ``form()`` view
-helper has an ``openTag()`` and ``closeTag()`` method which we use to open and
-close the form.  Then for each element with a label, we can use ``formRow()``,
-but for the two elements that are standalone, we use ``formHidden()`` and
-``formSubmit()``. 
+De nuevo mostramos un título como antes y entonces representamos el formulario. Zend Framework
+proporciona algunos métodos de ayuda en las vistas para hacer esto un poco más fácil. El método de ayuda
+``form()`` tiene dos métodos ``openTag()`` y ``closeTag()`` que utilizamos para abrir y 
+cerrar el formulario. Entonces, para cada elemento con etiqueta, podemos utilizar ``formRow()``,
+pero para los dos elementos autónomos utilizamos ``formHidden()`` y 
+``formSubmit()``.
 
 .. image:: ../images/user-guide.forms-and-actions.add-album-form.png
     :width: 940 px
 
-You should now be able to use the “Add new album” link on the home page of the
-application to add a new album record.
+Ahora debería ser capaz de utilizar el enlace “Add new album” en la página de inicio de la
+aplicación para añadir un nuevo disco.
 
 Editing an album
 ----------------
 
-Editing an album is almost identical to adding one, so the code is very similar.
-This time we use ``editAction()`` in the ``AlbumController``:
+Editar un album es casi idéntico a añadirlo, por lo que el código es muy similar.
+Esta vez utilizamos ``editAction()`` en el ``AlbumController``:
 
 .. code-block:: php
 
@@ -356,9 +351,9 @@ This time we use ``editAction()`` in the ``AlbumController``:
         }
     //...
 
-This code should look comfortably familiar. Let’s look at the differences from
-adding an album. Firstly, we look for the ``id`` that is in the matched route
-and use it to load the album to be edited:
+Este código debería parecerle confortablemente similar. Echemos un vistazo a las diferencias
+con añadir un album. En primer lugar, buscamos el ``id`` que hay en la ruta
+y lo utilizamos para cargar el album que queremos utilizar:
 
 .. code-block:: php
 
@@ -370,11 +365,11 @@ and use it to load the album to be edited:
     }
     $album = $this->getAlbumTable()->getAlbum($id);
 
-``params`` is a controller plugin that provides a convenient way to retrieve
-parameters from the matched route.  We use it to retrieve the ``id`` from the
-route we created in the modules’ ``module.config.php``. If the ``id`` is zero,
-then we redirect to the add action, otherwise, we continue by getting the album
-entity from the database.
+``params`` es un plugin del controlador que proporciona una vía conveniente para recuperar
+parámetros de la ruta. Lo utilizamos para recuperar el ``id`` de la
+ruta que creamos en el archivo ``module.config.php`` del módulo. Si el ``id`` es cero,
+entonces redirigimos a la acción añadir. En otro caso, seguimos tomando la entidad
+album de la base de datos.
 
 .. code-block:: php
 
@@ -382,19 +377,17 @@ entity from the database.
     $form->bind($album);
     $form->get('submit')->setAttribute('value', 'Edit');
 
-The form’s ``bind()`` method attaches the model to the form. This is used in two
-ways:
+El método ``bind()`` del formulario "conecta" el modelo con el formulario. Esto se utiliza en dos
+vías:
 
-# When displaying the form, the initial values for each element are extracted
-  from the model.
-# After successful validation in isValid(), the data from the form is put back
-  into the model.
+# Cuando se muestra el formulario, los valores iniciales de cada elemento son extraídos del modelo.
+# Después de una validación exitosa en isValid(), los datos del formulario son devueltos al modelo.
 
-These operations are done using a hydrator object. There are a number of
-hydrators, but the default one is ``Zend\Stdlib\Hydrator\ArraySerializable``
-which expects to find two methods in the model: ``getArrayCopy()`` and
-``exchangeArray()``. We have already written ``exchangeArray()`` in our
-``Album`` entity, so just need to write ``getArrayCopy()``:
+Estas operaciones se hacen utilizando un objeto hydrator. Hay un número de
+hydrators, pero por defecto es ``Zend\Stdlib\Hydrator\ArraySerializable``
+que espera encontrar dos métodos en el modelo: ``getArrayCopy()`` y
+``exchangeArray()``. Ya hemos escrito ``exchangeArray()`` en nuestra
+entidad ``Album``, por lo que solo necesitamos escribir ``getArrayCopy()``:
 
 .. code-block:: php
 
@@ -414,11 +407,11 @@ which expects to find two methods in the model: ``getArrayCopy()`` and
         }
     // ...
 
-As a result of using ``bind()`` with its hydrator, we do not need to populate the
-form’s data back into the ``$album`` as that’s already been done, so we can just
-call the mappers’ ``saveAlbum()`` to store the changes back to the database.
+Como resultado de utilizar ``bind()`` con su hydrator, no necesitamos volver a poblar
+los datos del formulario, ya se ha realizado, por lo que ya podemos
+llamar al método ``saveAlbum()`` para guardar los cambios en la base de datos.
 
-The view template, ``edit.phtml``, looks very similar to the one for adding an
+La plantilla de la vista, ``edit.phtml``, se ve muy similar a la vista para añadir un
 album:
 
 .. code-block:: php
@@ -448,6 +441,8 @@ album:
     echo $this->formRow($form->get('artist'));
     echo $this->formSubmit($form->get('submit'));
     echo $this->form()->closeTag();
+
+/// SEGUIR AQUI
 
 The only changes are to use the ‘Edit Album’ title and set the form’s action to
 the ‘edit’ action too.
